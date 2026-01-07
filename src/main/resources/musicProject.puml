@@ -1,0 +1,33 @@
+@startuml musicProject
+
+class Song{
+    String id
+    String artist
+    String name
+    String genre
+    double length
+    get()
+    set()
+    toString()
+}
+
+class User{
+    String id 
+    String username
+    Map<String, Playlist> library
+    get()
+    set()
+    addPlaylist()
+    removePlaylist()
+}
+
+class Playlist{
+    String id
+    String name
+    Map<String, Song> songs
+    get()
+    set()
+    addSong()
+    removeSong()
+}
+@enduml

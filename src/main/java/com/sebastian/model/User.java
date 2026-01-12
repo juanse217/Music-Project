@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class User {
-    private final String id;
+    private final String id; //We use final to avoid that, by mistake, it's changed inside the class, that way we can guarantee the identity. It needs to be immutable. 
     private String username;
     private final Map<String, Playlist> library = new HashMap<>(); //Usamos final para que no se pueda REASIGNAR y asi evitar bugs o errores. Nos aseguramos de que se mantenga la misma referencia siempre (no afecta la posibilidad de agregar playlists). Inicializamos de una vez para no depender del constructor. 
 
@@ -42,6 +42,7 @@ public class User {
     }
 
     public void removePlaylist(String playlistId){
+        if(!library.containsKey(playlistId)) throw new IllegalArgumentException("Playlist not found");
         library.remove(playlistId);
     }
 

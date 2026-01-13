@@ -26,12 +26,14 @@ public class UserService {
     }
 
     public void addUser(User user){
+        if(user == null) throw new IllegalArgumentException("The user can't be null");
         if(userRepo.findById(user.getId()).isPresent()) throw new UserAlreadyExistsException("The user already exists");
 
         userRepo.save(user);
     }
 
     public User findById(String id){
+        if(id == null || id.isBlank()) throw new IllegalArgumentException("The id cannot be null or blank");
         return userRepo.findById(id).orElseThrow(() ->  new UserNotFoundException("The user couldn't be found"));
     }
 
@@ -40,8 +42,9 @@ public class UserService {
     }
 
     public void updateUsername(String userId, String username){
-        User user = findById(userId);
+        if(username == null || username.isBlank()) throw new IllegalArgumentException("The username cannot be null");
 
+        User user = findById(userId);
         boolean exists = userRepo.findAll().stream().anyMatch(x -> !x.getId().equals(userId) && x.getUsername().equalsIgnoreCase(username));
 
         if(exists) throw new UsernameAlreadyExistsException("The username is already in use");

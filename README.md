@@ -102,5 +102,19 @@ Services return the most useful abstraction reasonable.
 ### Final answer (one sentence)
 Yes — prefer List<T> in services when you expect ordered, linear use; use Collection<T> when you truly don’t care.
 
-# 
+# Check for nulls
+
+It is a good idea to have null check on both the service and the repository. This makes that we have use case protection; our repository does it because it needs the correctness of the data it's going to save, besides, our repository is not only accessed by the service only. 
+
+It's a good idea to have the null check on our service as well. 
+
+# Metodos delgados o que solo pasan info 
+    public String getSongGenre(String id){
+        return findById(id).getGenre();
+    }
+
+    public double getSongLength(String id){
+        return findById(id).getLengthInSeconds();
+    }
+Estos metodos como tal no agregan nada, solo pasan informacion de un lado a otro, no tienen reglas del negocio. Lo que se puede hacer es dejar que los caller llamend a findById y de ahi accedan a la info. 
 

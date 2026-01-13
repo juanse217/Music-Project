@@ -46,6 +46,7 @@ public class Playlist {
     }
 
     public void removeSong(String idSong){
+        if(idSong == null || idSong.isBlank()) throw new IllegalArgumentException("The song id can't be blank or null");
         songs.remove(idSong);
     }
 }

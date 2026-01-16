@@ -15,7 +15,10 @@ Having a List is not a good Idea, Because it means the Service has state. **The 
 
 Services should be stateless. **If we store mutable data (List, DS...) as a field, it introduces state into the service**. The repo can be called from inside the methods and their results saved in local variables to operate with them. 
 
-# REPO FOR PLAYLISTS?
+# REPO FOR PLAYLISTS? 
+
+### **If an object cannot exist or be modified without another object, it is not an aggregate root**.
+
 
 We don't use a repository for Playlists, because they're not an **aggregate root** in our system ||||||||||||| an aggregate root is an object that ownns lyfecycle and consistency of related entities: an aggregate is a cluster of domain objects, it can be the fields, they live and die as a unit.
 an aggregate root: 
@@ -154,6 +157,12 @@ They're Storage Boundaries, no more.
 
 As an example, we have the findbyId method returning Optional<Song>. This promises Data access only, no business meaning, no rules applied. The repositories don't throw SongNotfoundException, don't check uniqueness and don't apply filters. 
 
+
+# ADDPLAYLIST//REMOVEPLAYLIST. ENFORCING RULES, CHECKING NULL/BLANK INPUT
+
+We don't have an if to check if the playlist exists or if it has a null id because User already does it. We do this because User owns the rules of Playlist is an aggregate of User so it enforces its rules. 
+
+Since the Playlist belongs to User only, the user is the one to enforce the rules, and so, we have to check the specifics of the Playlist within this Class. On the service, we only check for the arguments given and we forward them to the User. 
 
 
 

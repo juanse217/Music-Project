@@ -80,7 +80,27 @@ public class UserService {
                 .orElseThrow(() -> new PlaylistNotFoundException("The Playlist couldn't be found"));
     }
 
-    // TODO: add the addPlaylist and removePlaylist method.
+    
+
+    public void addPlaylist(String userId, Playlist playlist) {
+        if (userId == null || userId.isBlank())
+            throw new IllegalArgumentException("The user id cannot be null");
+        if (playlist == null)
+            throw new IllegalArgumentException("The playlist cannot be null"); 
+        User user = findById(userId); 
+
+        user.addPlaylist(playlist);
+    }
+
+    public void removePlaylist(String userId, String playlistId) {
+        if (userId == null || userId.isBlank())
+            throw new IllegalArgumentException("The user id cannot be null");
+        if (playlistId == null || playlistId.isBlank())
+            throw new IllegalArgumentException("The playlist id cannot be null");
+
+        User user = findById(userId);
+        user.removePlaylist(playlistId);
+    }
 
     public List<Song> getPlayListSongs(String userId, String playlistId) {
         return new ArrayList<>(findPlaylistById(userId, playlistId).getSongs());

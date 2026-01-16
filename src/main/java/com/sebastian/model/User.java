@@ -47,10 +47,13 @@ public class User {
             throw new IllegalArgumentException("The playlist can't be null");
         if (library.containsKey(newPlaylist.getId()))
             throw new IllegalArgumentException("The playlist already exists");
+        if(newPlaylist.getId() == null || newPlaylist.getId().isBlank()) throw new IllegalArgumentException("The playlist id cannot be null or blank");
         library.put(newPlaylist.getId(), newPlaylist);
     }
 
     public void removePlaylist(String playlistId) {
+        if (playlistId == null || playlistId.isBlank())
+            throw new IllegalArgumentException("The playlist id cannot be null");
         if (!library.containsKey(playlistId))
             throw new IllegalArgumentException("Playlist not found");
         library.remove(playlistId);

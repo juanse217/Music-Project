@@ -118,3 +118,42 @@ It's a good idea to have the null check on our service as well.
     }
 Estos metodos como tal no agregan nada, solo pasan informacion de un lado a otro, no tienen reglas del negocio. Lo que se puede hacer es dejar que los caller llamend a findById y de ahi accedan a la info. 
 
+# Rules and Boundaries in programming
+
+### RULES:
+Is a condition tha must always be true for the domain to remain valid. 
+
+A rule answers what's allowed, what's forbidden and when an exception is thrown. 
+
+As an example, we have that a song id must be unique (we check for other songs if they have the same ID) or the username rule, a user can't take a username already in use. 
+**They live in domain and service, never repositories**
+
+### BOUNDARIES:
+Is a "line" that decides who is allowed to do what, and from where.
+
+they answer who can modify a certain object, through which class it can be modified and with what guarantee. 
+
+**IMPORTANT BOUNDARY, AGGREGATE BOURDARIES**: 
+
+CURRENT AGGREGATE STRUCTURE: 
+
+User (AGGREGATE ROOT)
+ └── Playlist (inside User)
+      └── Song (reference by ID)
+
+This means that anything outside the User class MUST NOT modify Playlist directly, it has to go through User first. This is the reason why we don't have PlaylistRepo or PlaylistService, to enforce this rule. 
+
+**SERVICE BOUNDARIES**
+The services are our application boundaries. 
+
+As an example, we have the findById method that returns Song. This method guarantees that there's input validation, clear exception behavior and no leaking Optional; callers don't need to know how the songs are stored or what happens if not found, this is a boundary.
+
+**REPOSITORY BOUNDARIES**
+
+They're Storage Boundaries, no more. 
+
+As an example, we have the findbyId method returning Optional<Song>. This promises Data access only, no business meaning, no rules applied. The repositories don't throw SongNotfoundException, don't check uniqueness and don't apply filters. 
+
+
+
+

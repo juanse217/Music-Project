@@ -22,11 +22,7 @@ public class SongService {
         if (song == null)
             throw new IllegalArgumentException("The song can't be null");
         if (song.getId() == null || song.getId().isBlank())
-            throw new IllegalArgumentException("The song id cannot be null or blank"); // each layer has to protect
-                                                                                       // itself at its boundary, even
-                                                                                       // though the Song class already
-                                                                                       // checks for null, the service
-                                                                                       // needs to protects itself.
+            throw new IllegalArgumentException("The song id cannot be null or blank"); // each layer has to protect itself at its boundary, even though the Song class already checks for null, the service needs to protects itself.
         if (songRepo.findById(song.getId()).isPresent())
             throw new SongAlreadyExistsException("The song already exists");
 
